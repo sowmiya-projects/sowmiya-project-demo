@@ -11,7 +11,7 @@ async fn home() -> impl Responder {
                     <title>Rust Web App</title>
                 </head>
                 <body>
-                    <h1>Hey Sowmiya, Your Rust Application is Running</h1>
+                    <h1>Hey Sowmiya, Your Rust Application is Running in azure vm</h1>
                     <p>Status: Healthy</p>
                 </body>
             </html>
