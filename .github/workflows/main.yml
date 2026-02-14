@@ -29,17 +29,21 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "target/release/rust-simple-web"
-          target: "/home/${{ secrets.VM_USER }}/rust-simple-web/target/release/"
+          target: "/home/${{ secrets.VM_USER }}/"
 
-      - name: Restart Rust Service
+      - name: Deploy Binary
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.VM_IP }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            chmod +x /home/${{ secrets.VM_USER }}/rust-simple-web/target/release/rust-simple-web
-            sudo systemctl restart rust-simple-web
+         host: ${{ secrets.VM_IP }}
+         username: ${{ secrets.VM_USER }}
+         key: ${{ secrets.SSH_PRIVATE_KEY }}
+         script: |
+             mkdir -p /home/${{ secrets.VM_USER }}/target/release
+             mv -f /home/${{ secrets.VM_USER }}/target/release/rust-simple-web /home/${{ secrets.VM_USER }}/rust-simple-web/target/release/rust-simple-web
+             chmod +x /home/${{ secrets.VM_USER }}/rust-simple-web/target/release/rust-simple-web
+             sudo systemctl restart rust-simple-web
+
+
 
             
 
