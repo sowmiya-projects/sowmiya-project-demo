@@ -29,7 +29,9 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "target/release/rust-simple-web"
-          target: "/home/${{ secrets.VM_USER }}/rust-simple-web/target/release/"
+          target: "/home/${{ secrets.VM_USER }}/"
+          strip_components: 3
+
 
       - name: Restart Rust Service
         uses: appleboy/ssh-action@master
@@ -38,4 +40,7 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            mv /home/${{ secrets.VM_USER }}/rust-simple-web /home/${{ secrets.VM_USER }}/rust-simple-web/target/release/rust-simple-web
+            chmod +x /home/${{ secrets.VM_USER }}/rust-simple-web/target/release/rust-simple-web
             sudo systemctl restart rust-simple-web
+
